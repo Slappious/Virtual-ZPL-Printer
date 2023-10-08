@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using Prism.Events;
 using VirtualPrinter.Events;
 using VirtualPrinter.ViewModels;
@@ -72,5 +73,6 @@ namespace VirtualPrinter.Views
 			this.SaveWindow();
 			this.EventAggregator.GetEvent<WindowHiddenEvent>().Publish(new WindowHiddenEventArgs() { Window = this });
 		}
+
 	}
 }

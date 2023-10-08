@@ -78,7 +78,9 @@
 		<TextBox Grid.Column="1"
 				 Grid.Row="2"
 				 Margin="5"
-				 Text="{Binding Zpl, Mode=TwoWay}"/>
+				 Text="{Binding Zpl, Mode=TwoWay}"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"/>
 
 		<Button Grid.Column="1"
 				Grid.Row="3"
