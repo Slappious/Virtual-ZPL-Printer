@@ -38,7 +38,15 @@ namespace Labelary.Service
 
 			try
 			{
-				using (HttpClient client = new())
+				var httpClientHandler = new HttpClientHandler();
+				string proxyAddress = Environment.GetEnvironmentVariable("HTTP_PROXY");
+				if (!string.IsNullOrEmpty(proxyAddress))
+				{
+					httpClientHandler.Proxy = new System.Net.WebProxy(proxyAddress, true);
+					httpClientHandler.UseProxy = true;
+				}
+
+				using (HttpClient client = new HttpClient(httpClientHandler))
 				{
 					using (StringContent content = new(zpl.Filter(labelConfiguration.LabelFilters), Encoding.UTF8, "application/x-www-form-urlencoded"))
 					{

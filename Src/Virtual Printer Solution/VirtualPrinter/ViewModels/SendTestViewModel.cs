@@ -31,7 +31,7 @@ namespace VirtualPrinter.ViewModels
 	{
 		public SendTestViewModel()
 		{
-			this.SendCommand = new DelegateCommand(() => _ = this.SendCommandAsync(), () => this.SelectedLabelTemplate != null);
+			this.SendCommand = new DelegateCommand(() => _ = this.SendCommandAsync(), () => true);
 		}
 
 		public DelegateCommand SendCommand { get; set; }
@@ -134,6 +134,13 @@ namespace VirtualPrinter.ViewModels
 
 		protected async Task SendCommandAsync()
 		{
+			if (this.SelectedLabelTemplate == null && string.IsNullOrWhiteSpace(this.Zpl))
+			{
+				System.Diagnostics.Debug.WriteLine("No label template selected and no ZPL code entered.");
+				return;
+			}
+
+			System.Diagnostics.Debug.WriteLine("Sending test label.");
 			IPAddress ip = this.SelectedPrinterConfiguration.HostAddress == IPAddress.Any.ToString() ? IPAddress.Loopback : IPAddress.Parse(this.SelectedPrinterConfiguration.HostAddress);
 			_ = await TestClient.SendStringAsync(ip, this.SelectedPrinterConfiguration.Port, this.Zpl.ApplyFieldValues());
 		}
